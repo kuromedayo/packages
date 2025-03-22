@@ -57,22 +57,25 @@
   #:use-module (gnu packages xml)
   #:use-module (gnu packages xorg))
 
-(define-public fcitx5-nerd-theme
-  (package
-   (name "symbols-nerd-font")
-   (version "3.3.0")
-   (source (origin
-            (method url-fetch)
-            (uri (string-append
-                  "https://github.com/ryanoasis/nerd-fonts/releases/download/v"
-                  version
-                  "/NerdFontsSymbolsOnly.zip"))
-            (sha256
-             (base32
-              "0h53ldrkydxaps4kv087k71xgmb40b1s2nv2kvxc4bvs3qy60y10"))))
-   (build-system font-build-system)
-   (home-page "https://www.nerdfonts.com/")
-   (synopsis "Symbols-only nerd fonts dayo")
-   (description
-    "symbols-nerd-font description dayo")
-   (license license:expat)))
+(define-public fcitx5-catppuccin-theme
+  (let ((commit "")
+        (revision "1"))
+    (package
+      (name "fcitx5-catppuccin-theme")
+      (version (git-version "0.0.0" revision commit))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/catppuccin/fcitx5")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           ""))))
+      (build-system )
+      (synopsis "Soothing pastel theme for Fcitx5 ")
+      (description
+       "Soothing pastel theme for Fcitx5. It profides four Flavours (latte, frappe, macchiato or mocha) and Accent (rosewater, flamingo, pink, mauve, red, maroon, peach, yellow, green, teal, sky, sapphire, blue or lavender)")
+      (home-page "https://github.com/catppuccin/fcitx5")
+      (license license:expat))))
