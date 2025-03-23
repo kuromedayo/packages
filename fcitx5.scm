@@ -76,8 +76,8 @@
       (build-system copy-build-system)
       (arguments
        (list
-        (#:install-plan
-         #~'(("src" "share/fcitx5/themes")))))
+        #:install-plan
+        #~'(("src" "share/fcitx5/themes"))))
       (home-page "https://github.com/catppuccin/fcitx5")
       (synopsis "Soothing pastel theme for Fcitx5")
       (description
