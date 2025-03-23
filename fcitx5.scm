@@ -74,6 +74,10 @@
           (base32
            "07l5d1nlwiq2jhydxckv7a44kic1y8jl93q0jr2i0lmq0zvdzkcz"))))
       (build-system copy-build-system)
+      (arguments
+       (list
+        (#:install-plan
+         #~'(("src" "share/fcitx5/themes")))))
       (home-page "https://github.com/catppuccin/fcitx5")
       (synopsis "Soothing pastel theme for Fcitx5")
       (description
