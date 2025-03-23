@@ -57,25 +57,25 @@
   #:use-module (gnu packages xml)
   #:use-module (gnu packages xorg))
 
-;; (define-public fcitx5-catppuccin-theme
-;;   (let ((commit "")
-;;         (revision "1"))
-;;     (package
-;;       (name "fcitx5-catppuccin-theme")
-;;       (version (git-version "0.0.0" revision commit))
-;;       (source
-;;        (origin
-;;          (method git-fetch)
-;;          (uri (git-reference
-;;                (url "https://github.com/catppuccin/fcitx5")
-;;                (commit commit)))
-;;          (file-name (git-file-name name version))
-;;          (sha256
-;;           (base32
-;;            ""))))
-;;       (build-system )
-;;       (synopsis "Soothing pastel theme for Fcitx5 ")
-;;       (description
-;;        "Soothing pastel theme for Fcitx5. It profides four Flavours (latte, frappe, macchiato or mocha) and Accent (rosewater, flamingo, pink, mauve, red, maroon, peach, yellow, green, teal, sky, sapphire, blue or lavender)")
-;;       (home-page "https://github.com/catppuccin/fcitx5")
-;;       (license license:expat))))
+(define-public fcitx5-catppuccin-theme
+  (let ((commit "383c27ac46cbb55aa5f58acbd32841c1ed3a78a0")
+        (revision "0"))
+    (package
+      (name "fcitx5-catppuccin-theme")
+      (version (git-version "0.2" revision commit))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/catppuccin/fcitx5")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           ""))))
+      (build-system copy-build-system)
+      (synopsis "Soothing pastel theme for Fcitx5 ")
+      (description
+       "Soothing pastel theme for Fcitx5. It provides 4 flavors (latte, frappe, macchiato and mocha) and 14 accent colors (rosewater, flamingo, pink, mauve, red, maroon, peach, yellow, green, teal, sky, sapphire, blue and lavender)")
+      (home-page "https://github.com/catppuccin/fcitx5")
+      (license license:expat))))
