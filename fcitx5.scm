@@ -74,8 +74,8 @@
           (base32
            "07l5d1nlwiq2jhydxckv7a44kic1y8jl93q0jr2i0lmq0zvdzkcz"))))
       (build-system copy-build-system)
-      (synopsis "Soothing pastel theme for Fcitx5 ")
-      (description
-       "Soothing pastel theme for Fcitx5. It provides 4 flavors (latte, frappe, macchiato and mocha) and 14 accent colors (rosewater, flamingo, pink, mauve, red, maroon, peach, yellow, green, teal, sky, sapphire, blue and lavender)")
       (home-page "https://github.com/catppuccin/fcitx5")
+      (synopsis "Soothing pastel theme for Fcitx5")
+      (description
+       "Soothing pastel theme for Fcitx5. It provides 4 flavors (latte, frappe, macchiato and mocha) and 14 accent colors (rosewater, flamingo, pink, mauve, red, maroon, peach, yellow, green, teal, sky, sapphire, blue and lavender).")
       (license license:expat))))
