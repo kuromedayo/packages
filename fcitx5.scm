@@ -72,7 +72,7 @@
          (file-name (git-file-name name version))
          (sha256
           (base32
-           ""))))
+           "1gvdxxc67hxxznnp7bdir9frl7pmq0rigydphjn0nvjbqbivqs5d"))))
       (build-system copy-build-system)
       (synopsis "Soothing pastel theme for Fcitx5 ")
       (description
