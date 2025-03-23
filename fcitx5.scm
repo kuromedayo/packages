@@ -83,3 +83,30 @@
       (description
        "Soothing pastel theme for Fcitx5. It provides 4 flavors (latte, frappe, macchiato and mocha) and 14 accent colors (rosewater, flamingo, pink, mauve, red, maroon, peach, yellow, green, teal, sky, sapphire, blue and lavender).")
       (license license:expat))))
+
+(define-public fcitx5-nord-theme
+  (let ((commit "")
+        (revision "0"))
+    (package
+      (name "")
+      (version (git-version "0" revision commit))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/tonyfettes/fcitx5-nord")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           ""))))
+      (build-system copy-build-system)
+      (arguments
+       (list
+        #:install-plan
+        #~'(("src" "share/fcitx5/themes"))))
+      (home-page "https://github.com/tonyfettes/fcitx5-nord")
+      (synopsis "Fcitx5 theme based on Nord color")
+      (description
+       "")
+      (license license:expat))))
