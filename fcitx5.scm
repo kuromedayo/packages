@@ -62,7 +62,7 @@
         (revision "0"))
     (package
       (name "fcitx5-catppuccin-theme")
-      (version (git-version "0.2" revision commit))
+      (version (git-version "0" revision commit))
       (source
        (origin
          (method git-fetch)
@@ -81,7 +81,7 @@
       (home-page "https://github.com/catppuccin/fcitx5")
       (synopsis "Soothing pastel theme for Fcitx5")
       (description
-       "fcitx5-catppuccin-theme is a soothing pastel theme for Fcitx 5. It provides 4 flavors (latte, frappe, macchiato and mocha) and 14 accent colors (rosewater, flamingo, pink, mauve, red, maroon, peach, yellow, green, teal, sky, sapphire, blue and lavender).")
+       "Fcitx5-catppuccin-theme is a soothing pastel theme for Fcitx 5. It provides 4 flavors (latte, frappe, macchiato and mocha) and 14 accent colors (rosewater, flamingo, pink, mauve, red, maroon, peach, yellow, green, teal, sky, sapphire, blue and lavender).")
       (license license:expat))))
 
 (define-public fcitx5-nord-theme
@@ -89,7 +89,7 @@
         (revision "0"))
     (package
       (name "fcitx5-nord-theme")
-      (version (git-version "0.1" revision commit))
+      (version (git-version "0" revision commit))
       (source
        (origin
          (method git-fetch)
@@ -109,7 +109,7 @@
       (home-page "https://github.com/tonyfettes/fcitx5-nord")
       (synopsis "Fcitx5 theme based on Nord color")
       (description
-       "fcitx5-nord-theme is a Fcitx 5 theme based on Nord Color, featuring dimmed pastel colors for a comfortable yet vibrant ambiance.")
+       "Fcitx5-nord-theme is a Fcitx 5 theme based on Nord Color, featuring dimmed pastel colors for a comfortable yet vibrant ambiance. It offers 2 versions: Nord-dark and Nord-light.")
       (license license:expat))))
 
 (define-public fcitx5-fluent-theme
@@ -139,11 +139,12 @@
       (home-page "https://github.com/Reverier-Xu/Fluent-fcitx5")
       (synopsis "Fluent-Design theme with blur effect and shadow for fcitx5")
       (description
-       "fcitx5-fluent-theme is a Fluent-Design theme with blur effect and shadow.")
-      (license license:expat))))
+       "fcitx5-fluent-theme is a Fluent-Design theme with blur effect and shadow. It offers 4 versions: FluentDark, FluentDark-solid, FluentLight, and FluentLight-solid.")
+      (license license:mpl2.0))))
 
+;; Does not work properly with macOS-light/dark
 (define-public fcitx5-themes-candlelight
-  (let ((commit "")
+  (let ((commit "d4146d3d3f7a276a8daa2847c3e5c08de20485da")
         (revision "0"))
     (package
       (name "fcitx5-themes-candlelight")
@@ -157,19 +158,33 @@
          (file-name (git-file-name name version))
          (sha256
           (base32
-           ""))))
+           "0hm3axrfkd4cxr7shxclw00nk2xxwb2w4b2qjwmps1xkv3mlv1zw"))))
       (build-system copy-build-system)
       (arguments
        (list
         #:install-plan
-        #~'(("FluentDark-solid" "share/fcitx5/themes/")
-            ("FluentDark" "share/fcitx5/themes/")
-            ("FluentLight-solid" "share/fcitx5/themes/")
-            ("FluentLight" "share/fcitx5/themes/"))))
-      (home-page "https://github.com/Reverier-Xu/Fluent-fcitx5")
-      (synopsis "Fluent-Design theme with blur effect and shadow for fcitx5")
+        #~'(("spring" "share/fcitx5/themes/")
+            ("summer" "share/fcitx5/themes/")
+            ("autumn" "share/fcitx5/themes/")
+            ("winter" "share/fcitx5/themes/")
+            ("green" "share/fcitx5/themes/")
+            ("transparent-green" "share/fcitx5/themes/")
+            ("macOS-light" "share/fcitx5/themes/")
+            ("macOS-dark" "share/fcitx5/themes/"))))
+      (home-page "https://github.com/thep0y/fcitx5-themes-candlelight")
+      (synopsis "Simple theme for fcitx5")
       (description
-       "fcitx5-fluent-theme is a Fluent-Design theme with blur effect and shadow.")
+       "Fcitx5-themes-candlelight is a simple theme for fcitx 5. It has following color variants:
+
+@itemize
+@item spring
+@item summer
+@item autumn
+@item winter
+@item green
+@item transparent-green
+@item macOS-light
+@item macOS-dark")
       (license license:expat))))
 
 
