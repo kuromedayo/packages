@@ -81,15 +81,15 @@
       (home-page "https://github.com/catppuccin/fcitx5")
       (synopsis "Soothing pastel theme for Fcitx5")
       (description
-       "Soothing pastel theme for Fcitx5. It provides 4 flavors (latte, frappe, macchiato and mocha) and 14 accent colors (rosewater, flamingo, pink, mauve, red, maroon, peach, yellow, green, teal, sky, sapphire, blue and lavender).")
+       "fcitx5-catppuccin-theme is a soothing pastel theme for Fcitx 5. It provides 4 flavors (latte, frappe, macchiato and mocha) and 14 accent colors (rosewater, flamingo, pink, mauve, red, maroon, peach, yellow, green, teal, sky, sapphire, blue and lavender).")
       (license license:expat))))
 
 (define-public fcitx5-nord-theme
-  (let ((commit "")
+  (let ((commit "bdaa8fb723b8d0b22f237c9a60195c5f9c9d74d1")
         (revision "0"))
     (package
-      (name "")
-      (version (git-version "0" revision commit))
+      (name "fcitx5-nord-theme")
+      (version (git-version "0.1" revision commit))
       (source
        (origin
          (method git-fetch)
@@ -99,14 +99,46 @@
          (file-name (git-file-name name version))
          (sha256
           (base32
-           ""))))
+           "04bjxzx26x9r01ss7l0fam22nhsvh38dpijy7za0grnr5g93ynm9"))))
       (build-system copy-build-system)
       (arguments
        (list
         #:install-plan
-        #~'(("src" "share/fcitx5/themes"))))
+        #~'(("Nord-Dark" "share/fcitx5/themes/")
+            ("Nord-Light" "share/fcitx5/themes/"))))
       (home-page "https://github.com/tonyfettes/fcitx5-nord")
       (synopsis "Fcitx5 theme based on Nord color")
       (description
-       "")
+       "fcitx5-nord-theme is a Fcitx 5 theme based on Nord Color, featuring dimmed pastel colors for a comfortable yet vibrant ambiance.")
       (license license:expat))))
+
+(define-public fcitx5-fluent-theme
+  (let ((commit "399699ac7d366ed6c1952646ed71647e3c8f99b5")
+        (revision "0"))
+    (package
+      (name "fcitx5-fluent-theme")
+      (version (git-version "0.4.0" revision commit))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/Reverier-Xu/Fluent-fcitx5")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "188gsggh78gjf2kg9kxds819hxidc2yf5aivwbbqayw7cb2h5ijr"))))
+      (build-system copy-build-system)
+      (arguments
+       (list
+        #:install-plan
+        #~'(("FluentDark-solid" "share/fcitx5/themes/")
+            ("FluentDark" "share/fcitx5/themes/")
+            ("FluentLight-solid" "share/fcitx5/themes/")
+            ("FluentLight" "share/fcitx5/themes/"))))
+      (home-page "https://github.com/Reverier-Xu/Fluent-fcitx5")
+      (synopsis "Fluent-Design theme with blur effect and shadow for fcitx5")
+      (description
+       "fcitx5-fluent-theme is a Fluent-Design theme with blur effect and shadow.")
+      (license license:expat))))
+
