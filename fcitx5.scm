@@ -142,3 +142,36 @@
        "fcitx5-fluent-theme is a Fluent-Design theme with blur effect and shadow.")
       (license license:expat))))
 
+(define-public fcitx5-themes-candlelight
+  (let ((commit "")
+        (revision "0"))
+    (package
+      (name "fcitx5-themes-candlelight")
+      (version (git-version "0.1" revision commit))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/thep0y/fcitx5-themes-candlelight")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           ""))))
+      (build-system copy-build-system)
+      (arguments
+       (list
+        #:install-plan
+        #~'(("FluentDark-solid" "share/fcitx5/themes/")
+            ("FluentDark" "share/fcitx5/themes/")
+            ("FluentLight-solid" "share/fcitx5/themes/")
+            ("FluentLight" "share/fcitx5/themes/"))))
+      (home-page "https://github.com/Reverier-Xu/Fluent-fcitx5")
+      (synopsis "Fluent-Design theme with blur effect and shadow for fcitx5")
+      (description
+       "fcitx5-fluent-theme is a Fluent-Design theme with blur effect and shadow.")
+      (license license:expat))))
+
+
+
+
