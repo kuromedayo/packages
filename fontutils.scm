@@ -127,10 +127,10 @@
  ID.")
     (license license:expat)))
 
-(define-public rust-wit-bindgen-rt
+(define-public rust-wit-bindgen-rt-0.39
   (package
     (name "rust-wit-bindgen-rt")
-    (version "0.39")
+    (version "0.39.0")
     (source
      (origin
        (method url-fetch)
@@ -140,20 +140,17 @@
         (base32 "08z4hxwkpdpalxjps1ai9y7ihin26y9f476i53dv98v45gkqg3cw"))))
     (build-system cargo-build-system)
     (arguments
-     (list #:skip-build? #t
-           #:cargo-inputs
-           `(("rust-compiler-builtins" ,rust-compiler-builtins-0.1)
-             ("rust-rustc-std-workspace-alloc"
-              ,rust-rustc-std-workspace-alloc-1)
-             ("rust-rustc-std-workspace-core"
-              ,rust-rustc-std-workspace-core-1)
-             ("rust-compiler-builtins" ,rust-compiler-builtins-0.1))))
+     (list #:cargo-inputs
+           `(("rust-bitflags" ,rust-bitflags-2)
+             ("rust-futures" ,rust-futures-0.3)
+             ("rust-once-sell" ,rust-once-cell-1))))
     (home-page "https://github.com/bytecodealliance/wasi")
-    (synopsis "Experimental WASI API bindings for Rust")
-    (description
-     "This package provides experimental WASI API bindings for Rust.")
-    (license (list license:asl2.0
-                   license:expat))))
+    (synopsis "Runtime support for wit-bindgen bindings")
+    (description "This package provides runtime support for wit-bindgen, a suite
+ of bindings generators for languages compiled to WebAssembly using the
+ component model. It facilitates the use of bindings described in *.wit files,
+ managing imports, exports, and reuse between bindings definitions.")
+    (license (list license:asl2.0 license:expat))))
 
 (define-public rust-wasi-0.14
   (package
@@ -165,7 +162,7 @@
        (uri (crate-uri "wasi" version))
        (file-name (string-append name "-" version ".tar.gz"))
        (sha256
-        (base32 "08z4hxwkpdpalxjps1ai9y7ihin26y9f476i53dv98v45gkqg3cw"))))
+        (base32 "1cwcqjr3dgdq8j325awgk8a715h0hg0f7jqzsb077n4qm6jzk0wn"))))
     (build-system cargo-build-system)
     (arguments
      (list #:skip-build? #t
@@ -175,7 +172,8 @@
               ,rust-rustc-std-workspace-alloc-1)
              ("rust-rustc-std-workspace-core"
               ,rust-rustc-std-workspace-core-1)
-             ("rust-compiler-builtins" ,rust-compiler-builtins-0.1))))
+             ("rust-compiler-builtins" ,rust-compiler-builtins-0.1)
+             ("rust-wit-bindgen-rt" ,rust-wit-bindgen-rt-0.39))))
     (home-page "https://github.com/bytecodealliance/wasi")
     (synopsis "Experimental WASI API bindings for Rust")
     (description
@@ -202,7 +200,7 @@
         ("rust-js-sys" ,rust-js-sys-0.3)
         ("rust-libc" ,rust-libc-0.2)
         ("rust-rustc-std-workspace-core" ,rust-rustc-std-workspace-core-1)
-        ("rust-wasi" ,rust-wasi-0.11)
+        ("rust-wasi" ,rust-wasi-0.14)
         ("rust-wasm-bindgen" ,rust-wasm-bindgen-0.2))
        #:cargo-development-inputs
        (("rust-wasm-bindgen-test" ,rust-wasm-bindgen-test-0.3))))
