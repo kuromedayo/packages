@@ -1,4 +1,4 @@
-(define-module (gnu packages fontutils)
+(define-module (fontutils)
   #:use-module (gnu packages)
   #:use-module (gnu packages autotools)
   #:use-module (gnu packages bash)
@@ -50,6 +50,7 @@
   #:use-module (guix build-system meson)
   #:use-module (guix build-system pyproject)
   #:use-module (guix build-system python)
+  #:use-module (guix build-system cargo)
   #:use-module (guix utils)
   #:use-module (srfi srfi-1))
 
@@ -65,16 +66,14 @@
              (commit (string-append "v" version))))
        (file-name (git-file-name name version))
        (sha256
-        (base32 "1q61km32i1h3cmn8nazcgsbzpm8q2nxp3kq3glqgfgvlxr1s3brm"))))
-    (build-system rust-build-system)
-    (native-inputs
-     (list))
+        (base32 "13v9b2w94fqixy7v6nvzm35ran27smiw28x2rh2ycagzy947v6c0"))))
+    (build-system cargo-build-system)
+    ;; (native-inputs (list))
+    ;; (inputs (list ))
     (home-page "https://github.com/7sDream/fontfor")
-    (synopsis "Find and preview fonts that support a specified character")  
+    (synopsis "Find and preview fonts that support a specified character")
     (description "FontFor is a tool for finding fonts that can display a given
- character and previewing them in a browser. It is a Rust-based improvement over
- the earlier Python script 'which_fonts_support', offering enhanced safety,
- speed, and efficiency. The tool loads font files quickly using memory mapping
- and only parses necessary font tables. It supports previews both in the
- terminal and in a web browser for user-friendly font exploration.")
-    (license license:gpl3+)))
+character and previewing them.  The tool loads font files quickly
+using mmap and only parses necessary font tables. It supports previews both in
+the terminal and in a web browser for user-friendly font exploration.")  (license
+license:gpl3+)))
