@@ -39,6 +39,7 @@
   #:use-module (gnu packages tex)
   #:use-module (gnu packages textutils)
   #:use-module (gnu packages crates-io)
+  #:use-module (gnu packages crates-check)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix gexp)
   #:use-module (guix packages)
@@ -54,6 +55,63 @@
   #:use-module (guix build-system cargo)
   #:use-module (guix utils)
   #:use-module (srfi srfi-1))
+
+(define-public rust-fontconfig-parser-0.5
+  (package
+    (name "rust-fontconfig-parser")
+    (version "0.5.7")
+    (source (origin
+              (method url-fetch)
+              (uri (crate-uri "fontconfig-parser" version))
+              (file-name (string-append name "-" version ".tar.gz"))
+              (sha256
+               (base32
+                "19xdfsvl9sjha9n1lk3s6bqixcihsmjsd7zf3y90rsd69kagrz61"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs
+       (("rust-log" ,rust-log-0.4)
+        ("rust-roxmltree" ,rust-roxmltree-0.20)
+        ("rust-serde" ,rust-serde-1)
+        ("rust-criterion" ,rust-criterion-0.5)
+        ("rust-glob" ,rust-glob-0.3)
+        ("rust-k9" ,rust-k9-0.12)
+        ("rust-serde-json" ,rust-serde-json-1))))
+    (home-page "https://github.com/fschutt/rust-fontconfig")
+    (synopsis "Pure-Rust rewrite of the Linux fontconfig library")
+    (description "This package provides a Pure-Rust implementation of the Linux fontconfig library, with no system dependencies. It uses the @package{ttf-parser} and @package{allsorts} crates for font parsing and handling.")
+    (license license:expat)))
+
+(define-public rust-fontdb-0.23
+  (package
+    (name "rust-fontdb")
+    (version "0.23.0")
+    (source (origin
+              (method url-fetch)
+              (uri (crate-uri "fontdb" version))
+              (file-name (string-append name "-" version ".tar.gz"))
+              (sha256
+               (base32
+                "1c7p94qf8x6n62nrbia7nzwdxm2sbyygnhd5qfmfl7p7h30p4dpc"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs
+       (list (("rust-fontconfig-parser" ,rust-fontconfig-parser-0.5)
+              ("rust-log" ,rust-log-0.4)
+              ("rust-memmap2" ,rust-memmap2-0.9)
+              ("rust-slotmap" ,rust-slotmap-0.5)
+              ("rust-tinyvec" ,rust-tinyvec-1)
+              ("rust-ttf-parser" ,rust-ttf-parser-0.25)
+              ("rust-env-logger" ,rust-env-logger-0.10)
+              ))))
+    (home-page "https://github.com/alexheretic/ab-glyph")
+    (synopsis "In-memory font database with CSS-like queries")
+    (description "This package provides an in-memory font database that supports
+ loading fonts from files, directories, and raw data. It allows querying of
+ fonts using CSS-like queries and includes functionality for loading system
+ fonts by scanning predefined directories. Each font face is assigned a unique
+ ID.")
+    (license license:expat)))
 
 (define-public my-fontfor
   (package
