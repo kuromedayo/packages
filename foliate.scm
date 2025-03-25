@@ -55,11 +55,10 @@
     (list gjs
           libadwaita
           webkitgtk
-          gtk
-          ))
+          gtk))
    (home-page "https://johnfactotum.github.io/foliate/")
    (synopsis "Foliate synopsis dayo")
    (description
     "Foliate description dayo")
-   (license (list license:gpl3+ license:expat))))
+   (license (list license:gpl3))))
 
