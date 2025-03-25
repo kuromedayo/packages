@@ -103,34 +103,34 @@
 ;; @end itemize\n")
 ;;       (license license:expat))))
 
-;; (define-public fcitx5-catppuccin-theme
-;;   (let ((commit "383c27ac46cbb55aa5f58acbd32841c1ed3a78a0")
-;;         (revision "0"))
-;;     (package
-;;       (name "fcitx5-catppuccin-theme")
-;;       (version (git-version "0" revision commit))
-;;       (source
-;;        (origin
-;;          (method git-fetch)
-;;          (uri (git-reference
-;;                (url "https://github.com/catppuccin/fcitx5")
-;;                (commit commit)))
-;;          (file-name (git-file-name name version))
-;;          (sha256
-;;           (base32 "07l5d1nlwiq2jhydxckv7a44kic1y8jl93q0jr2i0lmq0zvdzkcz"))))
-;;       (build-system copy-build-system)
-;;       (arguments
-;;        (list
-;;         #:install-plan
-;;         #~'(("src" "share/fcitx5/themes"))))
-;;       (home-page "https://github.com/catppuccin/fcitx5")
-;;       (synopsis "Soothing pastel theme for Fcitx5")
-;;       (description
-;;        "Fcitx5-catppuccin-theme is a soothing pastel theme for Fcitx 5.  It
-;; provides 4 flavors (latte, frappe, macchiato and mocha) and 14 accent colors
-;; (rosewater, flamingo, pink, mauve, red, maroon, peach, yellow, green, teal, sky,
-;; sapphire, blue and lavender).")
-;;       (license license:expat))))
+(define-public my-fcitx5s-catppuccin-theme
+  (let ((commit "383c27ac46cbb55aa5f58acbd32841c1ed3a78a0")
+        (revision "0"))
+    (package
+      (name "my-fcitx5-catppuccin-theme")
+      (version (git-version "0" revision commit))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/catppuccin/fcitx5")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32 "07l5d1nlwiq2jhydxckv7a44kic1y8jl93q0jr2i0lmq0zvdzkcz"))))
+      (build-system copy-build-system)
+      (arguments
+       (list
+        #:install-plan
+        #~'(("src" "share/fcitx5/themes"))))
+      (home-page "https://github.com/catppuccin/fcitx5")
+      (synopsis "Soothing pastel theme for Fcitx5")
+      (description
+       "Fcitx5-catppuccin-theme is a soothing pastel theme for Fcitx 5.  It
+provides 4 flavors (latte, frappe, macchiato and mocha) and 14 accent colors
+(rosewater, flamingo, pink, mauve, red, maroon, peach, yellow, green, teal, sky,
+sapphire, blue and lavender).")
+      (license license:expat))))
 
 ;; (define-public fcitx5-nord-theme
 ;;   (let ((commit "bdaa8fb723b8d0b22f237c9a60195c5f9c9d74d1")
