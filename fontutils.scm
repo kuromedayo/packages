@@ -38,6 +38,7 @@
   #:use-module (gnu packages xorg)
   #:use-module (gnu packages tex)
   #:use-module (gnu packages textutils)
+  #:use-module (gnu packages crates-io)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix gexp)
   #:use-module (guix packages)
@@ -68,6 +69,11 @@
        (sha256
         (base32 "13v9b2w94fqixy7v6nvzm35ran27smiw28x2rh2ycagzy947v6c0"))))
     (build-system cargo-build-system)
+    (arguments
+     (list
+      #:cargo-inputs
+      (list rust-ab-glyph-0.2
+            rust-clap-4)))
     ;; (native-inputs (list))
     ;; (inputs (list ))
     (home-page "https://github.com/7sDream/fontfor")
