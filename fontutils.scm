@@ -73,7 +73,9 @@
      (list
       #:cargo-inputs
       (list rust-ab-glyph-0.2
-            rust-clap-4)))
+            rust-clap-4
+            rust-crossterm-0.27
+            rust-env-logger-0.11)))
     ;; (native-inputs (list))
     ;; (inputs (list ))
     (home-page "https://github.com/7sDream/fontfor")
