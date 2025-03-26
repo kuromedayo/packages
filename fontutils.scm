@@ -172,7 +172,6 @@
               ,rust-rustc-std-workspace-alloc-1)
              ("rust-rustc-std-workspace-core"
               ,rust-rustc-std-workspace-core-1)
-             ("rust-compiler-builtins" ,rust-compiler-builtins-0.1)
              ("rust-wit-bindgen-rt" ,rust-wit-bindgen-rt-0.39))))
     (home-page "https://github.com/bytecodealliance/wasi")
     (synopsis "Experimental WASI API bindings for Rust")
@@ -180,6 +179,63 @@
      "This package provides experimental WASI API bindings for Rust.")
     (license (list license:asl2.0
                    license:expat))))
+
+(define-public rust-r-efi-5
+  (package
+    (name "rust-r-efi")
+    (version "5.2.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "r-efi" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "1ig93jvpqyi87nc5kb6dri49p56q7r7qxrn8kfizmqkfj5nmyxkl"))))
+    (build-system cargo-build-system)
+    (arguments
+     (list #:cargo-inputs
+           `(("rust-compiler-builtins" ,rust-compiler-builtins-0.1)
+             ("rust-rustc-std-workspace-core" ,rust-rustc-std-workspace-core-1))))
+    (home-page "https://github.com/r-efi/r-efi/wiki")
+    (synopsis "UEFI Reference Specification Protocol Constants and Definitions")
+    (description
+     "The r-efi project provides the protocol constants and definitions of the
+UEFI Reference Specification as native rust code.  The scope of this project is
+limited to those protocol definitions.  The protocols are not actually
+implemented.  As such, this project serves as base for any UEFI application that
+needs to interact with UEFI, or implement (parts of) the UEFI specification.")
+    (license (list license:expat
+                   license:asl2.0
+                   license:lgpl2.1+))))
+
+(define-public rust-js-sys-0.3
+  (package
+    (name "rust-js-sys")
+    (version "0.3.77")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "js-sys" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "13x2qcky5l22z4xgivi59xhjjx4kxir1zg7gcj0f1ijzd4yg7yhw"))
+       (modules '((guix build utils)))
+       (snippet
+        '(begin (substitute* "Cargo.toml"
+                  (("\"=([[:digit:]]+(\\.[[:digit:]]+)*)" _ version)
+                   (string-append "\"^" version)))))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs
+       (("rust-once-cell" ,rust-once-cell-1)
+        ("rust-wasm-bindgen" ,rust-wasm-bindgen-0.2))))
+    (home-page "https://rustwasm.github.io/wasm-bindgen/")
+    (synopsis "Bindings for all JS global objects and functions in WASM")
+    (description
+     "Bindings for all JS global objects and functions in all JS environments
+like Node.js and browsers, built on @code{#[wasm_bindgen]} using the
+wasm-bindgen crate.")
+    (license (list license:asl2.0 license:expat))))
 
 (define-public rust-getrandom-0.3
   (package
@@ -191,11 +247,12 @@
        (uri (crate-uri "getrandom" version))
        (file-name (string-append name "-" version ".tar.gz"))
        (sha256
-        (base32 "1mzlnrb3dgyd1fb84gvw10pyr8wdqdl4ry4sr64i1s8an66pqmn4"))))
+        (base32 "1w2mlixa1989v7czr68iji7h67yra2pbg3s480wsqjza1r2sizkk"))))
     (build-system cargo-build-system)
     (arguments
      `(#:cargo-inputs
        (("rust-cfg-if" ,rust-cfg-if-1)
+        ("rust-r-efi" ,rust-r-efi-5)
         ("rust-compiler-builtins" ,rust-compiler-builtins-0.1)
         ("rust-js-sys" ,rust-js-sys-0.3)
         ("rust-libc" ,rust-libc-0.2)
