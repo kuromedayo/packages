@@ -834,13 +834,255 @@ useful for writing in-place operations such as mapping, filtering, and modifying
 elements while reusing the existing storage.")
     (license (list license:expat license:asl2.0))))
 
+(define-public rust-ref-cast-impl-1
+  (package
+    (name "rust-ref-cast-impl")
+    (version "1.0.24")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "ref-cast-impl" version))
+       (file-name
+        (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32
+         "1ir7dm7hpqqdgg60hlspsc1ck6wli7wa3xcqrsxz7wdz45f24r8i"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs
+       (("rust-proc-macro2" ,rust-proc-macro2-1)
+        ("rust-quote" ,rust-quote-1)
+        ("rust-syn" ,rust-syn-2))
+       #:cargo-development-inputs (("rust-ref-cast" ,rust-ref-cast-1))))
+    (home-page "https://github.com/dtolnay/ref-cast")
+    (synopsis "Derive implementation for @code{ref_cast::RefCast}")
+    (description
+     "Derive implementation for @code{ref_cast::RefCast}.")
+    (license (list license:expat license:asl2.0))))
+
+(define-public rust-ref-cast-1
+  (package
+    (name "rust-ref-cast")
+    (version "1.0.24")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "ref-cast" version))
+       (file-name
+        (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32
+         "1kx57g118vs9sqi6d2dcxy6vp8jbx8n5hilmv1sacip9vc8y82ja"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:tests? #f          ; Doesn't always interact well with the test crate.
+       #:cargo-inputs
+       (("rust-ref-cast-impl" ,rust-ref-cast-impl-1))
+       #:cargo-development-inputs
+       (("rust-ref-cast-test-suite" ,rust-ref-cast-test-suite-0.0.0)
+        ("rust-rustversion" ,rust-rustversion-1)
+        ("rust-trybuild" ,rust-trybuild-1))))
+    (home-page "https://github.com/dtolnay/ref-cast")
+    (synopsis "Safely cast &T to &U")
+    (description
+     "Safely cast &T to &U where the struct U contains a single field of type T.")
+    (license (list license:expat license:asl2.0))))
+
+(define-public rust-obey-0.1
+  (package
+    (name "rust-obey")
+    (version "0.1.1")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "obey" version))
+       (file-name
+        (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32
+         "13qv0wi69f421ppl3bmq5s7gc0fv9bk4swb57b7bf3wiy8mn64w3"))))
+    (build-system cargo-build-system)
+    (home-page "")
+    (synopsis "Test utilities for collections")
+    (description
+     "This package provides tools for property based tests of collections")
+    (license (list license:expat license:asl2.0))))
+
 (define-public rust-range-collections-0.4
   (package
     (name "rust-range-collections")
     (version "0.4.6")
     (source (origin
               (method url-fetch)
-              (uri (crate-uri "range-range-collections" version))
+              (uri (crate-uri "range-collections" version))
+              (file-name (string-append name "-" version ".tar.gz"))
+              (sha256
+               (base32
+                "1l50y6hhjm5n49n277wra1gpzsn2rr0x5law9icdgpjakkm0c5w6"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs
+       (("rust-binary-merge" ,rust-binary-merge-0.1)
+        ("rust-inplace-vec-builder" ,rust-inplace-vec-builder-0.1)
+        ("rust-ref-cast" ,rust-ref-cast-1)
+        ("rust-smallvec" ,rust-smallvec-1)
+        ("rust-bytecheck" ,rust-bytecheck-0.6)
+        ("rust-rkyv" ,rust-rkyv-0.7)
+        ("rust-serde" ,rust-serde-1))
+       #:cargo-development-inputs
+       (("rust-criterion" ,rust-criterion-0.3)
+        ("rust-hex" ,rust-hex-0.4)
+        ("rust-num-traits" ,rust-num-traits-0.2)
+        ("rust-obey" ,rust-obey-0.1)
+        ("rust-proptest" ,rust-proptest-1)
+        ("rust-quickcheck" ,rust-quickcheck-0.8)
+        ("rust-quickcheck-macros" ,rust-quickcheck-macros-0.8)
+        ("rust-rand" ,rust-rand-0.7)
+        ("rust-rkyv" ,rust-rkyv-0.7)
+        ("rust-serde-cbor" ,rust-serde-cbor-0.11)
+        ("rust-testdrop" ,rust-testdrop-0.1))))
+    (home-page "https://github.com/CarlKCarlK/range-set-blaze")
+    (synopsis "Fast integer sets using sorted disjoint ranges")
+    (description "This package provides the @command{range-set-blaze} crate,
+which implements fast integer sets using sorted disjoint ranges.  It supports
+various integer sizes and full set operations while efficiently storing ranges
+in a BTreeMap.  The main struct is @code{RangeSetBlaze}, and the main trait is
+@code{SortedDisjoint}.")
+    (license (list license:expat license:asl2.0))))
+
+(define-public rust-range-set-0.0.10
+  (package
+    (name "rust-range-set")
+    (version "0.0.10")
+    (source (origin
+              (method url-fetch)
+              (uri (crate-uri "range-set" version))
+              (file-name (string-append name "-" version ".tar.gz"))
+              (sha256
+               (base32
+                "04l8fs1033gs12lilhny2a9yigqds5w8s0w19gbdrb13d4krjkpm"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs
+       (("rust-num-traits" ,rust-num-traits-0.2)
+        ("rust-smallvec" ,rust-smallvec-1)
+        ("rust-serde" ,rust-serde-1))))
+    (home-page "https://github.com/spearman/range-set")
+    (synopsis "Store collections of PrimInt values as inclusive ranges")  
+    (description "This package provides a data structure for storing collections
+of @code{PrimInt} values as inclusive ranges using generic @code{SmallVec}
+-backed storage.  A generic @code{smallvec::Array} parameter allows configuring
+how many ranges will be stored on the stack before spilling over onto the
+heap.")
+    (license (list license:expat license:asl2.0))))
+
+(define-public rust-permutator-0.4
+  (package
+    (name "rust-permutator")
+    (version "0.4.3")
+    (source (origin
+              (method url-fetch)
+              (uri (crate-uri "permutator" version))
+              (file-name (string-append name "-" version ".tar.gz"))
+              (sha256
+               (base32
+                "1mhh4mpmmlh45by6bavfk241g2qriw7lgaj4wd5w6d98qf7z7im9"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs
+       (("rust-num" ,rust-num-0.2))))
+    (home-page "https://github.com/NattapongSiri/permutator")
+    (synopsis "Lexicographic cartesian product and permutation generator")  
+    (description "This package provides functions to compute lexicographic
+cartesian products and permutations at any specific index from given data.  It
+can generate a complete lexicographic cartesian product from one or multiple
+datasets, produce lexicographic combinations, and compute non-lexicographic
+permutations and k-permutations.")
+    (license (list license:expat license:asl2.0))))
+
+(define-public rust-criterion-0.3.5;; for rangemap
+  (package
+    (inherit rust-criterion-0.3)
+    (name "rust-criterion")
+    (version "0.3.5")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "criterion" version))
+       (file-name
+        (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "13yd64ah93gkbdv7qq4cr6rhgl9979jjcjk3gkhnav1b7glns7dh"))))
+    (arguments
+     `(#:cargo-inputs
+       (("rust-async-std" ,rust-async-std-1)
+        ("rust-atty" ,rust-atty-0.2)
+        ("rust-cast" ,rust-cast-0.3)
+        ("rust-clap" ,rust-clap-2)
+        ("rust-criterion-plot" ,rust-criterion-plot-0.4)
+        ("rust-csv" ,rust-csv-1)
+        ("rust-futures" ,rust-futures-0.3)
+        ("rust-itertools" ,rust-itertools-0.10)
+        ("rust-lazy-static" ,rust-lazy-static-1)
+        ("rust-num-traits" ,rust-num-traits-0.2)
+        ("rust-oorandom" ,rust-oorandom-11)
+        ("rust-plotters" ,rust-plotters-0.3)
+        ("rust-rayon" ,rust-rayon-1)
+        ("rust-regex" ,rust-regex-1)
+        ("rust-serde" ,rust-serde-1)
+        ("rust-serde-cbor" ,rust-serde-cbor-0.11)
+        ("rust-serde-derive" ,rust-serde-derive-1)
+        ("rust-serde-json" ,rust-serde-json-1)
+        ("rust-smol" ,rust-smol-1)
+        ("rust-tinytemplate" ,rust-tinytemplate-1)
+        ("rust-tokio" ,rust-tokio-1)
+        ("rust-walkdir" ,rust-walkdir-2))
+       #:cargo-development-inputs
+       (("rust-approx" ,rust-approx-0.5)
+        ("rust-futures" ,rust-futures-0.3)
+        ("rust-quickcheck" ,rust-quickcheck-1)
+        ("rust-rand" ,rust-rand-0.8)
+        ("rust-tempfile" ,rust-tempfile-3))))))
+
+(define-public rust-rangemap-0.0.10
+  (package
+    (name "rust-rangemap")
+    (version "1.5.1")
+    (source (origin
+              (method url-fetch)
+              (uri (crate-uri "rangemap" version))
+              (file-name (string-append name "-" version ".tar.gz"))
+              (sha256
+               (base32
+                "116nhgzbjil97qjq3d64mg7fi7lqka5hqdf44bzjwd29d1ywq3zn"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs
+       (("rust-serde" ,rust-serde-1))
+       #:cargo-development-inputs
+       (("rust-chrono" ,rust-chrono-0.4)
+        ("rust-criterion" ,rust-criterion-0.3)
+        ("rust-permutator" ,rust-permutator-0.4)
+        ("rust-proptest" ,rust-proptest-1)
+        ("rust-rand" ,rust-rand-0.8)
+        ("rust-rustc-version" ,rust-rustc-version-0.4)
+        ("rust-serde-json" ,rust-serde-json-1)
+        ("rust-test-strategy" ,rust-test-strategy-0.3))))
+    (home-page "https://github.com/jeffparsons/rangemap")
+    (synopsis "Map and set data structures with range-based keys")  
+    (description "This package provides RangeMap and RangeInclusiveMap, map data
+structures that use ranges as keys.  Contiguous and overlapping ranges mapping
+to the same value are automatically merged.  Corresponding RangeSet and
+RangeInclusiveSet structures are also included.")
+    (license (list license:expat license:asl2.0))))
+
+(define-public rust-range-set-blaze-0.1
+  (package
+    (name "rust-range-set-blaze")
+    (version "0.1.16")
+    (source (origin
+              (method url-fetch)
+              (uri (crate-uri "range-set-blaze" version))
               (file-name (string-append name "-" version ".tar.gz"))
               (sha256
                (base32
@@ -848,22 +1090,19 @@ elements while reusing the existing storage.")
     (build-system cargo-build-system)
     (arguments
      `(#:cargo-inputs
-       (("rust-binary-merge" ,rust-binary-merge-0.1)
-        ("rust-inplace-vec-builder" ,rust-itertools-0.12)
-        ("rust-num-integer" ,rust-num-integer-0.1)
-        ("rust-num-traits" ,rust-num-traits-0.2)
-        ("rust-gen-ops" ,rust-gen-ops-0.4)
+       (("rust-gen-ops" ,rust-gen-ops-0.4)
         ("rust-itertools" ,rust-itertools-0.12)
-        ("rust-num-integer" ,rust-num-integer-0.1))
+        ("rust-num-integer" ,rust-num-integer-0.1)
+        ("rust-num-traits" ,rust-num-traits-0.2))
        #:cargo-development-inputs
        (("rust-criterion" ,rust-criterion-0.5)
         ("rust-glob" ,rust-0.3)
         ("rust-quickcheck" ,rust-quickcheck-1)
         ("rust-quickcheck-macros" ,rust-quickcheck-macros-1)
         ("rust-rand" ,rust-0.8)
-        ("rust-range-collections" ,rust-range-collections-)
-        ("rust-range-set" ,rust-serde-json-1)
-        ("rust-rangemap" ,rust-serde-json-1)
+        ("rust-range-collections" ,rust-range-collections-0.4)
+        ("rust-range-set" ,rust-range-set-0.0.10)
+        ("rust-rangemat" ,rust-rangemap-1)
         ("rust-roaring" ,rust-serde-json-1)
         ("rust-syntatcit-for" ,rust-serde-json-1)
         ("rust-thousands" ,rust-serde-json-1)
@@ -877,47 +1116,6 @@ various integer sizes and full set operations while efficiently storing ranges
 in a BTreeMap. The main struct is @code{RangeSetBlaze}, and the main trait is
 @code{SortedDisjoint}.")
     (license (list license:expat license:asl2.0))))
-
-;; (define-public rust-range-set-blaze-0.13
-;;   (package
-;;     (name "rust-range-set-blaze")
-;;     (version "0.13.0")
-;;     (source (origin
-;;               (method url-fetch)
-;;               (uri (crate-uri "range-set-blaze" version))
-;;               (file-name (string-append name "-" version ".tar.gz"))
-;;               (sha256
-;;                (base32
-;;                 "135mp5gji3r7xgmkr7vj9gc7hqa1z0mrn92r2d9qmcbxcb0zz5ni"))))
-;;     (build-system cargo-build-system)
-;;     (arguments
-;;      `(#:cargo-inputs
-;;        (("rust-gen-ops" ,rust-gen-ops-0.4)
-;;         ("rust-itertools" ,rust-itertools-0.12)
-;;         ("rust-num-integer" ,rust-num-integer-0.1)
-;;         ("rust-num-traits" ,rust-num-traits-0.2))
-;;        #:cargo-development-inputs
-;;        (("rust-criterion" ,rust-criterion-0.5)
-;;         ("rust-glob" ,rust-0.3)
-;;         ("rust-quickcheck" ,rust-quickcheck-1)
-;;         ("rust-quickcheck-macros" ,rust-quickcheck-macros-1)
-;;         ("rust-rand" ,rust-0.8)
-;;         ("rust-range-collections" ,rust-range-collections-)
-;;         ("rust-range-set" ,rust-serde-json-1)
-;;         ("rust-rangemap" ,rust-serde-json-1)
-;;         ("rust-roaring" ,rust-serde-json-1)
-;;         ("rust-syntatcit-for" ,rust-serde-json-1)
-;;         ("rust-thousands" ,rust-serde-json-1)
-;;         ("rust-trybuild" ,rust-serde-json-1)
-;;         ("rust-wasm-bindgen-test" ,rust-serde-json-1))))
-;;     (home-page "https://github.com/CarlKCarlK/range-set-blaze")
-;;     (synopsis "Fast integer sets using sorted disjoint ranges")
-;;     (description "This package provides the @command{range-set-blaze} crate,
-;; which implements fast integer sets using sorted disjoint ranges.  It supports
-;; various integer sizes and full set operations while efficiently storing ranges
-;; in a BTreeMap. The main struct is @code{RangeSetBlaze}, and the main trait is
-;; @code{SortedDisjoint}.")
-;;     (license license:expat license:asl2.0)))
 
 (define-public my-fontfor
   (package
