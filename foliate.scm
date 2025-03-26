@@ -17,6 +17,7 @@
    (name "my-foliate")
    (version "3.2.1")
    (source (origin
+             ;; Probably I should include foliate-js manually because it is more reproducible
             (method url-fetch)
             (uri (string-append
                   "https://github.com/johnfactotum/foliate/releases/download/"
