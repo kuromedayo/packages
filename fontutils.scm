@@ -101,14 +101,14 @@
 (define-public rust-fontdb-0.16
   (package
     (name "rust-fontdb")
-    (version "0.16.0")
+    (version "0.16.2")
     (source (origin
               (method url-fetch)
               (uri (crate-uri "fontdb" version))
               (file-name (string-append name "-" version ".tar.gz"))
               (sha256
                (base32
-                "19l8w3817j4pz78zz60hfivn6nhi62427i6j5lszf1w4lda8rf4q"))))
+                "1hqxv3jnh06s4bflrwnb39mi3knllfs4mxm44vsn0gzgqch90adh"))))
     (build-system cargo-build-system)
     (arguments
      `(#:cargo-inputs
@@ -117,8 +117,9 @@
         ("rust-memmap2" ,rust-memmap2-0.9)
         ("rust-slotmap" ,rust-slotmap-1)
         ("rust-tinyvec" ,rust-tinyvec-1)
-        ("rust-ttf-parser" ,rust-ttf-parser-0.20)
-        ("rust-env-logger" ,rust-env-logger-0.10))))
+        ("rust-ttf-parser" ,rust-ttf-parser-0.20))
+       #:cargo-development-inputs
+       (("rust-env-logger" ,rust-env-logger-0.10))))
     (home-page "https://github.com/alexheretic/ab-glyph")
     (synopsis "In-memory font database with CSS-like queries")
     (description "This package provides an in-memory font database that supports
@@ -127,6 +128,8 @@
  fonts by scanning predefined directories. Each font face is assigned a unique
  ID.")
     (license license:expat)))
+
+;; Below are probably needless
 
 (define-public rust-wit-bindgen-rt-0.39
   (package
@@ -598,54 +601,141 @@ tools for implementation.")
     (license (list license:asl2.0
                    license:expat))))
 
-(define-public rust-rand-0.9
+;; (define-public rust-rand-0.9
+;;   (package
+;;     (name "rust-rand")
+;;     (version "0.9.0")
+;;     (source
+;;      (origin
+;;        (method url-fetch)
+;;        (uri (crate-uri "rand" version))
+;;        (file-name (string-append name "-" version ".tar.gz"))
+;;        (sha256
+;;         (base32 "156dyvsfa6fjnv6nx5vzczay1scy5183dvjchd7bvs47xd5bjy9p"))))
+;;     (build-system cargo-build-system)
+;;     (arguments
+;;      `(#:cargo-inputs
+;;        (("rust-log" ,rust-log-0.4)
+;;         ("rust-rand-chacha" ,rust-rand-chacha-0.9)
+;;         ("rust-zerocopy" ,rust-zerocopy-0.8)
+;;         ("rust-rand-core" ,rust-rand-core-0.9)
+;;         ("rust-serde" ,rust-serde-1))
+;;        #:cargo-development-inputs
+;;        (("rust-bincode" ,rust-bincode-1)
+;;         ("rust-rand-pcg" ,rust-rand-pcg-0.9)
+;;         ("rust-rayon" ,rust-rayon-1))))
+;;     (home-page "https://crates.io/crates/rand")
+;;     (synopsis "Random number generators and other randomness functionality")
+;;     (description
+;;      "Rand provides utilities to generate random numbers, to convert them to
+;; useful types and distributions, and some randomness-related algorithms.")
+;;     (license (list license:expat license:asl2.0))))
+
+(define-public rust-serde-derive-1
   (package
-    (name "rust-rand")
-    (version "0.9.0")
+    (name "rust-serde-derive")
+    (version "1.0.219")
     (source
      (origin
        (method url-fetch)
-       (uri (crate-uri "rand" version))
+       (uri (crate-uri "serde_derive" version))
        (file-name (string-append name "-" version ".tar.gz"))
        (sha256
-        (base32 "156dyvsfa6fjnv6nx5vzczay1scy5183dvjchd7bvs47xd5bjy9p"))))
+        (base32
+         "001azhjmj7ya52pmfiw4ppxm16nd44y15j2pf5gkcwrcgz7pc0jv"))))
     (build-system cargo-build-system)
     (arguments
      `(#:cargo-inputs
-       (("rust-log" ,rust-log-0.4)
-        ("rust-rand-chacha" ,rust-rand-chacha-0.9)
-        ("rust-zerocopy" ,rust-zerocopy-0.8)
-        ("rust-rand-core" ,rust-rand-core-0.9)
-        ("rust-serde" ,rust-serde-1))
+       (("rust-proc-macro2" ,rust-proc-macro2-1)
+        ("rust-quote" ,rust-quote-1)
+        ("rust-syn" ,rust-syn-2))
        #:cargo-development-inputs
-       (("rust-bincode" ,rust-bincode-1)
-        ("rust-rand-pcg" ,rust-rand-pcg-0.9)
-        ("rust-rayon" ,rust-rayon-1))))
-    (home-page "https://crates.io/crates/rand")
-    (synopsis "Random number generators and other randomness functionality")
+       (("rust-serde" ,rust-serde-1))))
+    (home-page "https://serde.rs")
+    (synopsis "Macros 1.1 implementation of #[derive(Serialize, Deserialize)]")
     (description
-     "Rand provides utilities to generate random numbers, to convert them to
-useful types and distributions, and some randomness-related algorithms.")
+     "This package provides the macros 1.1 implementation of
+@code{#[derive(Serialize, Deserialize)]}.")
     (license (list license:expat license:asl2.0))))
 
-(define-public rust-grid-0.16
+(define-public rust-serde-1
+  (package
+    (name "rust-serde")
+    (version "1.0.219")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "serde" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32
+         "1dl6nyxnsi82a197sd752128a4avm6mxnscywas1jq30srp2q3jz"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs
+       (("rust-serde-derive" ,rust-serde-derive-1))
+       #:cargo-development-inputs
+       (("rust-serde-derive" ,rust-serde-derive-1))))
+    (home-page "https://serde.rs")
+    (synopsis "Generic serialization/deserialization framework")
+    (description
+     "This package provides a generic serialization/deserialization framework.")
+    (license (list license:expat license:asl2.0))))
+
+(define-public rust-serde-json-1
+  (package
+    (name "rust-serde-json")
+    (version "1.0.140")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "serde_json" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "0wwkp4vc20r87081ihj3vpyz5qf7wqkqipq17v99nv6wjrp8n1i0"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs
+       (("rust-indexmap" ,rust-indexmap-2)
+        ("rust-itoa" ,rust-itoa-1)
+        ("rust-memchr" ,rust-memchr-2)
+        ("rust-ryu" ,rust-ryu-1)
+        ("rust-serde" ,rust-serde-1))
+       #:cargo-development-inputs
+       (("rust-automod" ,rust-automod-1)
+        ("rust-indoc" ,rust-indoc-2)
+        ("rust-ref-cast" ,rust-ref-cast-1)
+        ("rust-rustversion" ,rust-rustversion-1)
+        ("rust-serde" ,rust-serde-1)
+        ("rust-serde-bytes" ,rust-serde-bytes-0.11)
+        ("rust-serde-derive" ,rust-serde-derive-1)
+        ("rust-serde-stacker" ,rust-serde-stacker-0.1)
+        ("rust-trybuild" ,rust-trybuild-1))))
+    (home-page "https://github.com/serde-rs/json")
+    (synopsis "JSON serialization file format")
+    (description
+     "This package provides a JSON serialization file format.")
+    (license (list license:expat license:asl2.0))))
+
+(define-public rust-grid-0.13
   (package
     (name "rust-grid")
-    (version "0.16.1")
+    (version "0.13.0")
     (source (origin
               (method url-fetch)
               (uri (crate-uri "grid" version))
               (file-name (string-append name "-" version ".tar.gz"))
               (sha256
                (base32
-                "19l8w3817j4pz78zz60hfivn6nhi62427i6j5lszf1w4lda8rf4q"))))
+                "135mp5gji3r7xgmkr7vj9gc7hqa1z0mrn92r2d9qmcbxcb0zz5ni"))))
     (build-system cargo-build-system)
     (arguments
      `(#:cargo-inputs
-       (("rust-serde" ,rust-serde-1)
-        ("rust-criterion" ,rust-criterion-0.5)
-        ("rust-rand" ,rust-rand-)
-        ("rust-env-logger" ,rust-env-logger-0.10))))
+       (("rust-serde" ,rust-serde-1))
+       #:cargo-development-inputs
+       (("rust-criterion" ,rust-criterion-0.3)
+        ("rust-rand" ,rust-rand-0.8)
+        ("rust-serde-json" ,rust-serde-json-1))))
     (home-page "https://github.com/alexheretic/ab-glyph")
     (synopsis "In-memory font database with CSS-like queries")
     (description "This package provides an in-memory font database that supports
@@ -674,15 +764,14 @@ useful types and distributions, and some randomness-related algorithms.")
        (("rust-ab-glyph" ,rust-ab-glyph-0.2)
         ("rust-clap" ,rust-clap-4)
         ("rust-crossterm" ,rust-crossterm-0.27)
-        ("rust-env-logger" ,rust-env-logger-0.11)
         ("rust-fontdb" ,rust-fontdb-0.16)
-        ("rust-clap" ,rust-clap-4)
-        ("rust-clap" ,rust-clap-4)
-        ("rust-clap" ,rust-clap-4)
-        ("rust-clap" ,rust-clap-4)
-        ("rust-clap" ,rust-clap-4)
-        ("rust-clap" ,rust-clap-4)
-        )))
+        ("rust-grid" ,rust-grid-0.13)
+        ("rust-httparse" ,rust-httparse-1)
+        ("rust-log" ,rust-log-0.4)
+        ("rust-grid" ,rust-grid-0.13)
+        ("rust-grid" ,rust-grid-0.13)
+        ("rust-env-logger" ,rust-env-logger-0.11)
+        ("rust-grid" ,rust-grid-0.13))))
     ;; (native-inputs (list))
     ;; (inputs (list ))
     (home-page "https://github.com/7sDream/fontfor")
