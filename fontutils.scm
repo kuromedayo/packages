@@ -40,6 +40,7 @@
   #:use-module (gnu packages textutils)
   #:use-module (gnu packages crates-io)
   #:use-module (gnu packages crates-check)
+  #:use-module (gnu packages crates-crypto)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix gexp)
   #:use-module (guix packages)
@@ -372,6 +373,123 @@ like Node.js and browsers, built on @code{#[wasm_bindgen]} using the
 wasm-bindgen crate.")
     (license (list license:asl2.0 license:expat))))
 
+(define-public rust-web-sys-0.3
+  (package
+    (name "rust-web-sys")
+    (version "0.3.77")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "web-sys" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "1lnmc1ffbq34qw91nndklqqm75rasaffj2g4f8h1yvqqz4pdvdik"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs
+       (("rust-js-sys" ,rust-js-sys-0.3)
+        ("rust-wasm-bindgen" ,rust-wasm-bindgen-0.2))
+       #:cargo-development-inputs (("rust-futures" ,rust-futures-0.3))))
+    (home-page "https://rustwasm.github.io/wasm-bindgen/web-sys/index.html")
+    (synopsis
+     "Bindings for all Web APIs, a procedurally generated crate from WebIDL")
+    (description
+     "Bindings for all Web APIs, a procedurally generated crate from WebIDL.")
+    (license (list license:expat license:asl2.0))))
+
+(define-public rust-wasm-bindgen-futures-0.4
+  (package
+    (name "rust-wasm-bindgen-futures")
+    (version "0.4.50")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "wasm-bindgen-futures" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "0q8ymi6i9r3vxly551dhxcyai7nc491mspj0j1wbafxwq074fpam"))
+       (modules '((guix build utils)))
+       (snippet
+        '(begin (substitute* "Cargo.toml"
+                  (("\"=([[:digit:]]+(\\.[[:digit:]]+)*)" _ version)
+                   (string-append "\"^" version)))))))
+    (build-system cargo-build-system)
+    (arguments
+      `(#:cargo-inputs
+        (("rust-cfg-if" ,rust-cfg-if-1)
+         ("rust-futures-core" ,rust-futures-core-0.3)
+         ("rust-js-sys" ,rust-js-sys-0.3)
+         ("rust-once-cell" ,rust-once-cell-1)
+         ("rust-wasm-bindgen" ,rust-wasm-bindgen-0.2)
+         ("rust-web-sys" ,rust-web-sys-0.3))
+        #:cargo-development-inputs
+        (("rust-futures-channel" ,rust-futures-channel-0.3)
+         ("rust-futures-lite" ,rust-futures-lite-2))))
+    (home-page "https://rustwasm.github.io/wasm-bindgen/")
+    (synopsis
+     "Bridging the gap between Rust Futures and JavaScript Promises")
+    (description
+     "Bridging the gap between Rust Futures and JavaScript Promises.")
+    (license (list license:expat license:asl2.0))))
+
+(define-public rust-wasm-bindgen-test-macro-0.3
+  (package
+    (name "rust-wasm-bindgen-test-macro")
+    (version "0.3.50")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "wasm-bindgen-test-macro" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "16znd6wz79v2i3b2sf5n4ld2kcci8br3wcx7z5c9c07sqln09m8p"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs
+       (("rust-proc-macro2" ,rust-proc-macro2-1)
+        ("rust-quote" ,rust-quote-1)
+        ("rust-syn" ,rust-syn-2))
+       #:cargo-development-inputs
+       (("rust-tokio" ,rust-tokio-1)
+        ("rust-trybuild" ,rust-trybuild-1))))
+    (home-page "https://github.com/rustwasm/wasm-bindgen")
+    (synopsis "Internal testing macro for wasm-bindgen")
+    (description
+     "This library contains the internal testing macro for wasm-bindgen.")
+    (license (list license:expat license:asl2.0))))
+
+(define-public rust-wasm-bindgen-test-0.3
+  (package
+    (name "rust-wasm-bindgen-test")
+    (version "0.3.50")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (crate-uri "wasm-bindgen-test" version))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32 "1hsjc60wynlhgw02p32pgb93303pqmsdfxj67gxdkdm37kixbj36"))
+       (modules '((guix build utils)))
+       (snippet
+        '(begin (substitute* "Cargo.toml"
+                  (("\"=([[:digit:]]+(\\.[[:digit:]]+)*)" _ version)
+                   (string-append "\"^" version)))))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs
+       (("rust-gg-alloc" ,rust-gg-alloc-1)
+        ("rust-js-sys" ,rust-js-sys-0.3)
+        ("rust-minicov" ,rust-minicov-0.3)
+        ("rust-wasm-bindgen" ,rust-wasm-bindgen-0.2)
+        ("rust-wasm-bindgen-futures" ,rust-wasm-bindgen-futures-0.4)
+        ("rust-wasm-bindgen-test-macro" ,rust-wasm-bindgen-test-macro-0.3))))
+    (home-page "https://github.com/rustwasm/wasm-bindgen")
+    (synopsis
+     "Internal testing crate for wasm-bindgen")
+    (description
+     "Internal testing crate for wasm-bindgen.")
+    (license (list license:expat license:asl2.0))))
+
 (define-public rust-getrandom-0.3
   (package
     (name "rust-getrandom")
@@ -413,11 +531,11 @@ retrieving random data from system source.")
        (uri (crate-uri "rand_core" version))
        (file-name (string-append name "-" version ".tar.gz"))
        (sha256
-        (base32 "0b4j2v4cb5krak1pv6kakv4sz6xcwbrmy2zckc32hsigbrwy82zc"))))
+        (base32 "0f3xhf16yks5ic6kmgxcpv1ngdhp48mmfy4ag82i1wnwh8ws3ncr"))))
     (build-system cargo-build-system)
     (arguments
      `(#:cargo-inputs
-       (("rust-getrandom" ,rust-getrandom-0.2)
+       (("rust-getrandom" ,rust-getrandom-0.3)
         ("rust-serde" ,rust-serde-1))))
     (home-page "https://rust-random.github.io/book")
     (synopsis "Core random number generator traits and tools")
@@ -436,20 +554,49 @@ tools for implementation.")
        (uri (crate-uri "rand_chacha" version))
        (file-name (string-append name "-" version ".tar.gz"))
        (sha256
-        (base32 "123x2adin558xbhvqb8w4f6syjsdkmqff8cxwhmjacpsl1ihmhg6"))))
+        (base32 "1jr5ygix7r60pz0s1cv3ms1f6pd1i9pcdmnxzzhjc3zn3mgjn0nk"))))
     (build-system cargo-build-system)
     (arguments
      `(#:cargo-inputs
        (("rust-ppv-lite86" ,rust-ppv-lite86-0.2)
-        ("rust-rand-core" ,rust-rand-core-0.6)
+        ("rust-rand-core" ,rust-rand-core-0.9)
         ("rust-serde" ,rust-serde-1))
        #:cargo-development-inputs
-       (("rust-serde-json" ,rust-serde-json-1))))
+       (("rust-rand-core" ,rust-rand-core-0.9)
+        ("rust-serde-json" ,rust-serde-json-1))))
     (home-page "https://crates.io/crates/rand_chacha")
     (synopsis "ChaCha random number generator")
     (description
      "This package provides the ChaCha random number generator.")
     (license (list license:expat license:asl2.0))))
+
+(define-public rust-rand-pcg-0.9
+  (package
+    (name "rust-rand-pcg")
+    (version "0.9.0")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (crate-uri "rand_pcg" version))
+        (file-name (string-append name "-" version ".tar.gz"))
+        (sha256
+         (base32
+          "1xr04g5zrzqi9n7vyzjznnyrmy55i8k34ripsb2gmdxazzvw72ml"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs
+       (("rust-rand-core" ,rust-rand-core-0.9)
+        ("rust-serde" ,rust-serde-1))
+       #:cargo-development-inputs
+       (("rust-bincode" ,rust-bincode-1)
+        ("rust-rand-core" ,rust-rand-core-0.9))))
+    (home-page "https://crates.io/crates/rand_pcg")
+    (synopsis
+     "Selected PCG random number generators")
+    (description
+     "This package implements a selection of PCG random number generators.")
+    (license (list license:asl2.0
+                   license:expat))))
 
 (define-public rust-rand-0.9
   (package
@@ -461,20 +608,19 @@ tools for implementation.")
        (uri (crate-uri "rand" version))
        (file-name (string-append name "-" version ".tar.gz"))
        (sha256
-        (base32 "013l6931nn7gkc23jz5mm3qdhf93jjf0fg64nz2lp4i51qd8vbrl"))))
+        (base32 "156dyvsfa6fjnv6nx5vzczay1scy5183dvjchd7bvs47xd5bjy9p"))))
     (build-system cargo-build-system)
     (arguments
      `(#:cargo-inputs
        (("rust-log" ,rust-log-0.4)
         ("rust-rand-chacha" ,rust-rand-chacha-0.9)
-        ("rust-libc" ,rust-libc-0.2)
-        ("rust-log" ,rust-log-0.4)
-        ("rust-packed-simd-2" ,rust-packed-simd-2-0.3)
-        ("rust-rand-core" ,rust-rand-core-0.6)
+        ("rust-zerocopy" ,rust-zerocopy-0.8)
+        ("rust-rand-core" ,rust-rand-core-0.9)
         ("rust-serde" ,rust-serde-1))
        #:cargo-development-inputs
        (("rust-bincode" ,rust-bincode-1)
-        ("rust-rand-pcg" ,rust-rand-pcg-0.3))))
+        ("rust-rand-pcg" ,rust-rand-pcg-0.9)
+        ("rust-rayon" ,rust-rayon-1))))
     (home-page "https://crates.io/crates/rand")
     (synopsis "Random number generators and other randomness functionality")
     (description
