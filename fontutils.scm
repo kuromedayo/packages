@@ -39,6 +39,7 @@
   #:use-module (gnu packages tex)
   #:use-module (gnu packages textutils)
   #:use-module (gnu packages crates-io)
+  #:use-module (gnu packages crates-web)
   #:use-module (gnu packages crates-check)
   #:use-module (gnu packages crates-crypto)
   #:use-module ((guix licenses) #:prefix license:)
@@ -1000,7 +1001,7 @@ datasets, produce lexicographic combinations, and compute non-lexicographic
 permutations and k-permutations.")
     (license (list license:expat license:asl2.0))))
 
-(define-public rust-criterion-0.3.5;; for rangemap
+(define-public rust-criterion-0.3.5;; TODO: rangemap let ranbindings would be better
   (package
     (inherit rust-criterion-0.3)
     (name "rust-criterion")
@@ -1012,9 +1013,10 @@ permutations and k-permutations.")
        (file-name
         (string-append name "-" version ".tar.gz"))
        (sha256
-        (base32 "13yd64ah93gkbdv7qq4cr6rhgl9979jjcjk3gkhnav1b7glns7dh"))))
+        (base32 "044d2x7cxfvw2g558lzyllcv7jcdkw9xmacmb0nzx8pv4pyxl10n"))))
     (arguments
-     `(#:cargo-inputs
+     `(#:tests? #f
+       #:cargo-inputs
        (("rust-async-std" ,rust-async-std-1)
         ("rust-atty" ,rust-atty-0.2)
         ("rust-cast" ,rust-cast-0.3)
@@ -1044,7 +1046,30 @@ permutations and k-permutations.")
         ("rust-rand" ,rust-rand-0.8)
         ("rust-tempfile" ,rust-tempfile-3))))))
 
-(define-public rust-rangemap-0.0.10
+(define-public rust-syntactic-for-0.1
+  (package
+    (name "rust-syntactic-for")
+    (version "0.1.1")
+    (source (origin
+              (method url-fetch)
+              (uri (crate-uri "syntactic-for" version))
+              (file-name (string-append name "-" version ".tar.gz"))
+              (sha256
+               (base32
+                "0mr7jjnmb4k9sdg1hxi6f2q1hkjwjf3ipb2wvhvb6cwk46id35x8"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs
+       (("rust-proc-macro2" ,rust-proc-macro2-1)
+        ("rust-quote" ,rust-quote-1)
+        ("rust-syn" ,rust-syn-1))))
+    (home-page "https://github.com/NattapongSiri/permutator")
+    (synopsis "Syntactic 'for' loop macro")  
+    (description "This package provides a Rust macro that implements a syntactic
+for loop.")
+    (license license:expat)))
+
+(define-public rust-rangemap-1
   (package
     (name "rust-rangemap")
     (version "1.5.1")
@@ -1061,7 +1086,7 @@ permutations and k-permutations.")
        (("rust-serde" ,rust-serde-1))
        #:cargo-development-inputs
        (("rust-chrono" ,rust-chrono-0.4)
-        ("rust-criterion" ,rust-criterion-0.3)
+        ("rust-criterion" ,rust-criterion-0.3.5)
         ("rust-permutator" ,rust-permutator-0.4)
         ("rust-proptest" ,rust-proptest-1)
         ("rust-rand" ,rust-rand-0.8)
@@ -1086,28 +1111,29 @@ RangeInclusiveSet structures are also included.")
               (file-name (string-append name "-" version ".tar.gz"))
               (sha256
                (base32
-                "135mp5gji3r7xgmkr7vj9gc7hqa1z0mrn92r2d9qmcbxcb0zz5ni"))))
+                "1lhk1wpwnshx6kz6rb2fnhq3hgpzjwl3d38496zanbi6b7aba8c4"))))
     (build-system cargo-build-system)
     (arguments
-     `(#:cargo-inputs
+     `(#:tests? #f
+       #:cargo-inputs
        (("rust-gen-ops" ,rust-gen-ops-0.4)
         ("rust-itertools" ,rust-itertools-0.12)
         ("rust-num-integer" ,rust-num-integer-0.1)
         ("rust-num-traits" ,rust-num-traits-0.2))
        #:cargo-development-inputs
        (("rust-criterion" ,rust-criterion-0.5)
-        ("rust-glob" ,rust-0.3)
+        ("rust-glob" ,rust-glob-0.3)
         ("rust-quickcheck" ,rust-quickcheck-1)
         ("rust-quickcheck-macros" ,rust-quickcheck-macros-1)
-        ("rust-rand" ,rust-0.8)
+        ("rust-rand" ,rust-rand-0.8)
         ("rust-range-collections" ,rust-range-collections-0.4)
         ("rust-range-set" ,rust-range-set-0.0.10)
         ("rust-rangemat" ,rust-rangemap-1)
-        ("rust-roaring" ,rust-serde-json-1)
-        ("rust-syntatcit-for" ,rust-serde-json-1)
-        ("rust-thousands" ,rust-serde-json-1)
-        ("rust-trybuild" ,rust-serde-json-1)
-        ("rust-wasm-bindgen-test" ,rust-serde-json-1))))
+        ("rust-roaring" ,rust-roaring-0.10)
+        ("rust-syntactic-for" ,rust-syntactic-for-0.1)
+        ("rust-thousands" ,rust-thousands-0.2)
+        ("rust-trybuild" ,rust-trybuild-1)
+        ("rust-wasm-bindgen-test" ,rust-wasm-bindgen-test-0.3))))
     (home-page "https://github.com/CarlKCarlK/range-set-blaze")
     (synopsis "Fast integer sets using sorted disjoint ranges")
     (description "This package provides the @command{range-set-blaze} crate,
@@ -1116,6 +1142,42 @@ various integer sizes and full set operations while efficiently storing ranges
 in a BTreeMap. The main struct is @code{RangeSetBlaze}, and the main trait is
 @code{SortedDisjoint}.")
     (license (list license:expat license:asl2.0))))
+
+(define-public rust-ttf-parser-0.21
+  (package
+    (inherit rust-ttf-parser-0.25)
+    (name "rust-ttf-parser")
+    (version "0.21.1")
+    (source (origin
+              (method url-fetch)
+              (uri (crate-uri "ttf-parser" version))
+              (file-name (string-append name "-" version ".tar.gz"))
+              (sha256
+               (base32
+                "1y0wsfgri7yi41cn57g4fzqm30x1v5nlrci6j5mqcxwpys1isn9c")))))) 
+
+(define-public rust-tui-input-0.8
+  (package
+    (name "rust-tui-input")
+    (version "0.8.0")
+    (source (origin
+              (method url-fetch)
+              (uri (crate-uri "tui-input" version))
+              (file-name (string-append name "-" version ".tar.gz"))
+              (sha256
+               (base32
+                "00fwd3w06kb2w83jcdcffcwbayf8ch5rsria1a04rbx3cgw8brxk"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs
+       (("rust-unicode-width" ,rust-unicode-width-0.1)
+        ("rust-crossterm" ,rust-crossterm-0.27)
+        ("rust-serde" ,rust-serde-1)
+        ("rust-termion" ,rust-termion-2))))
+    (home-page "https://github.com/sayanarijit/tui-input")
+    (synopsis "TUI input library supporting multiple backends")  
+    (description "This package provides a TUI input library supporting multiple backends.")
+    (license license:expat)))
 
 (define-public my-fontfor
   (package
@@ -1142,10 +1204,11 @@ in a BTreeMap. The main struct is @code{RangeSetBlaze}, and the main trait is
         ("rust-log" ,rust-log-0.4)
         ("rust-once-cell" ,rust-once-cell-1)
         ("rust-range-set-blaze" ,rust-grid-0.13)
-        ("rust-env-logger" ,rust-env-logger-0.11)
-        ("rust-grid" ,rust-grid-0.13))))
-    ;; (native-inputs (list))
-    ;; (inputs (list ))
+        ("rust-ratatui" ,rust-ratatui-0.26)
+        ("rust-thiserror" ,rust-thiserror-1)
+        ("rust-ttf-parser" ,rust-ttf-parser-0.21)
+        ("rust-tui-input" ,rust-tui-input-0.8)
+        ("rust-env-logger" ,rust-env-logger-0.11))))
     (home-page "https://github.com/7sDream/fontfor")
     (synopsis "Find and preview fonts that support a specified character")
     (description "FontFor is a tool for finding fonts that can display a given
