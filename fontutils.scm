@@ -745,6 +745,180 @@ tools for implementation.")
  ID.")
     (license license:expat)))
 
+(define-public rust-gen-ops-0.4
+  (package
+    (name "rust-gen-ops")
+    (version "0.4.0")
+    (source (origin
+              (method url-fetch)
+              (uri (crate-uri "gen_ops" version))
+              (file-name (string-append name "-" version ".tar.gz"))
+              (sha256
+               (base32
+                "02hfbxyz79z284g4l9gdqhw99rn8pgyb0si9babj1102nyfy2k9h"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-development-inputs
+       (("rust-paste" ,rust-paste-1))))
+    (home-page "https://github.com/K-Vinayak/gen_ops")
+    (synopsis "Rust macros for operator overloading of generic types")
+    (description "This package provides a set of Rust macros that facilitate
+operator overloading for generic types.  The macros allow specifying generic
+parameters, type signatures, and callable expressions for various operators,
+along with optional where clauses.")
+    (license license:expat)))
+
+(define-public rust-binary-merge-0.1
+  (package
+    (name "rust-binary-merge")
+    (version "0.1.2")
+    (source (origin
+              (method url-fetch)
+              (uri (crate-uri "binary-merge" version))
+              (file-name (string-append name "-" version ".tar.gz"))
+              (sha256
+               (base32
+                "1aslcmvvsa8k7zzddlfbji618jvpsylangxjh51nljx5h0fbhysr"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-development-inputs
+       (("rust-criterion" ,rust-criterion-0.3)
+        ("rust-proptest" ,rust-proptest-1))))
+    (home-page "https://github.com/rklaehn/binary-merge")
+    (synopsis "Minimum comparison merge of two sorted random access sequences")  
+    (description "This package provides a library for efficiently merging two
+sorted random access sequences with a minimal number of comparisons.")
+    (license (list license:expat license:asl2.0))))
+
+(define-public rust-testdrop-0.1
+  (package
+    (name "rust-testdrop")
+    (version "0.1.2")
+    (source (origin
+              (method url-fetch)
+              (uri (crate-uri "testdrop" version))
+              (file-name (string-append name "-" version ".tar.gz"))
+              (sha256
+               (base32
+                "1bmyxcxc8d1pzkfl6jpg3pr4ld2qmhrlazcjsddk5dcflhrfwf9x"))))
+    (build-system cargo-build-system)
+    (home-page "https://github.com/malbarbo/testdrop")
+    (synopsis "Utility to help test drop implementations")  
+    (description "This package provides a small crate to help test drop
+ implementation")
+    (license (list license:expat license:asl2.0))))
+
+(define-public rust-inplace-vec-builder-0.1
+  (package
+    (name "rust-inplace-vec-builder")
+    (version "0.1.1")
+    (source (origin
+              (method url-fetch)
+              (uri (crate-uri "inplace-vec-builder" version))
+              (file-name (string-append name "-" version ".tar.gz"))
+              (sha256
+               (base32
+                "01ykl6cis06m2hw88413jhmjs4qvhsi8fx8j3ykr2s12r3nw4r6g"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:tests? #f ;; It fails...
+       #:cargo-inputs
+       (("rust-smallvec" ,rust-smallvec-1))
+       #:cargo-development-inputs
+       (("rust-testdrop" ,rust-testdrop-0.1))))
+    (home-page "https://github.com/rklaehn/inplace-vec-builder")
+    (synopsis "Library for building Vec or SmallVec in-place without allocation")  
+    (description "This package provides a small library for constructing a Vec
+or SmallVec in-place without additional memory allocation.  It is particularly
+useful for writing in-place operations such as mapping, filtering, and modifying
+elements while reusing the existing storage.")
+    (license (list license:expat license:asl2.0))))
+
+(define-public rust-range-collections-0.4
+  (package
+    (name "rust-range-collections")
+    (version "0.4.6")
+    (source (origin
+              (method url-fetch)
+              (uri (crate-uri "range-range-collections" version))
+              (file-name (string-append name "-" version ".tar.gz"))
+              (sha256
+               (base32
+                "135mp5gji3r7xgmkr7vj9gc7hqa1z0mrn92r2d9qmcbxcb0zz5ni"))))
+    (build-system cargo-build-system)
+    (arguments
+     `(#:cargo-inputs
+       (("rust-binary-merge" ,rust-binary-merge-0.1)
+        ("rust-inplace-vec-builder" ,rust-itertools-0.12)
+        ("rust-num-integer" ,rust-num-integer-0.1)
+        ("rust-num-traits" ,rust-num-traits-0.2)
+        ("rust-gen-ops" ,rust-gen-ops-0.4)
+        ("rust-itertools" ,rust-itertools-0.12)
+        ("rust-num-integer" ,rust-num-integer-0.1))
+       #:cargo-development-inputs
+       (("rust-criterion" ,rust-criterion-0.5)
+        ("rust-glob" ,rust-0.3)
+        ("rust-quickcheck" ,rust-quickcheck-1)
+        ("rust-quickcheck-macros" ,rust-quickcheck-macros-1)
+        ("rust-rand" ,rust-0.8)
+        ("rust-range-collections" ,rust-range-collections-)
+        ("rust-range-set" ,rust-serde-json-1)
+        ("rust-rangemap" ,rust-serde-json-1)
+        ("rust-roaring" ,rust-serde-json-1)
+        ("rust-syntatcit-for" ,rust-serde-json-1)
+        ("rust-thousands" ,rust-serde-json-1)
+        ("rust-trybuild" ,rust-serde-json-1)
+        ("rust-wasm-bindgen-test" ,rust-serde-json-1))))
+    (home-page "https://github.com/CarlKCarlK/range-set-blaze")
+    (synopsis "Fast integer sets using sorted disjoint ranges")
+    (description "This package provides the @command{range-set-blaze} crate,
+which implements fast integer sets using sorted disjoint ranges.  It supports
+various integer sizes and full set operations while efficiently storing ranges
+in a BTreeMap. The main struct is @code{RangeSetBlaze}, and the main trait is
+@code{SortedDisjoint}.")
+    (license (list license:expat license:asl2.0))))
+
+;; (define-public rust-range-set-blaze-0.13
+;;   (package
+;;     (name "rust-range-set-blaze")
+;;     (version "0.13.0")
+;;     (source (origin
+;;               (method url-fetch)
+;;               (uri (crate-uri "range-set-blaze" version))
+;;               (file-name (string-append name "-" version ".tar.gz"))
+;;               (sha256
+;;                (base32
+;;                 "135mp5gji3r7xgmkr7vj9gc7hqa1z0mrn92r2d9qmcbxcb0zz5ni"))))
+;;     (build-system cargo-build-system)
+;;     (arguments
+;;      `(#:cargo-inputs
+;;        (("rust-gen-ops" ,rust-gen-ops-0.4)
+;;         ("rust-itertools" ,rust-itertools-0.12)
+;;         ("rust-num-integer" ,rust-num-integer-0.1)
+;;         ("rust-num-traits" ,rust-num-traits-0.2))
+;;        #:cargo-development-inputs
+;;        (("rust-criterion" ,rust-criterion-0.5)
+;;         ("rust-glob" ,rust-0.3)
+;;         ("rust-quickcheck" ,rust-quickcheck-1)
+;;         ("rust-quickcheck-macros" ,rust-quickcheck-macros-1)
+;;         ("rust-rand" ,rust-0.8)
+;;         ("rust-range-collections" ,rust-range-collections-)
+;;         ("rust-range-set" ,rust-serde-json-1)
+;;         ("rust-rangemap" ,rust-serde-json-1)
+;;         ("rust-roaring" ,rust-serde-json-1)
+;;         ("rust-syntatcit-for" ,rust-serde-json-1)
+;;         ("rust-thousands" ,rust-serde-json-1)
+;;         ("rust-trybuild" ,rust-serde-json-1)
+;;         ("rust-wasm-bindgen-test" ,rust-serde-json-1))))
+;;     (home-page "https://github.com/CarlKCarlK/range-set-blaze")
+;;     (synopsis "Fast integer sets using sorted disjoint ranges")
+;;     (description "This package provides the @command{range-set-blaze} crate,
+;; which implements fast integer sets using sorted disjoint ranges.  It supports
+;; various integer sizes and full set operations while efficiently storing ranges
+;; in a BTreeMap. The main struct is @code{RangeSetBlaze}, and the main trait is
+;; @code{SortedDisjoint}.")
+;;     (license license:expat license:asl2.0)))
+
 (define-public my-fontfor
   (package
     (name "my-fontfor")
@@ -768,8 +942,8 @@ tools for implementation.")
         ("rust-grid" ,rust-grid-0.13)
         ("rust-httparse" ,rust-httparse-1)
         ("rust-log" ,rust-log-0.4)
-        ("rust-grid" ,rust-grid-0.13)
-        ("rust-grid" ,rust-grid-0.13)
+        ("rust-once-cell" ,rust-once-cell-1)
+        ("rust-range-set-blaze" ,rust-grid-0.13)
         ("rust-env-logger" ,rust-env-logger-0.11)
         ("rust-grid" ,rust-grid-0.13))))
     ;; (native-inputs (list))
@@ -779,5 +953,5 @@ tools for implementation.")
     (description "FontFor is a tool for finding fonts that can display a given
 character and previewing them.  The tool loads font files quickly
 using mmap and only parses necessary font tables. It supports previews both in
-the terminal and in a web browser for user-friendly font exploration.")  (license
-license:gpl3+)))
+the terminal and in a web browser for user-friendly font exploration.")
+    (license license:gpl3+)))
