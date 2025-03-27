@@ -42,6 +42,9 @@
    (home-page "https://design.ubuntu.com/font")
    (synopsis "Ubuntu font family")
    (description
-    " The Ubuntu font family is a sans-serif typeface family available in 22 styles plus a variable font with adjustable weight and width axes. Its fixed-width companion, Ubuntu Mono, comes in 8 styles and a variable font with an adjustable weight axis. ")
+    "The Ubuntu font family is a sans-serif typeface family available in 22
+styles plus a variable font with adjustable weight and width axes.  Its
+fixed-width companion, Ubuntu Mono, comes in 8 styles and a variable font with
+an adjustable weight axis.")
    (license license:silofl1.1))) ; there is no ubuntu license in licenses.scm
 
