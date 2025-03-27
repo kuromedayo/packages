@@ -19,11 +19,11 @@
              (base32
               "0h53ldrkydxaps4kv087k71xgmb40b1s2nv2kvxc4bvs3qy60y10"))))
    (build-system font-build-system)
-   (home-page "https://www.nerdfonts.com/")
-   (synopsis "Symbols-only nerd fonts dayo")
+   (home-page "https://www.nerdfonts.com")
+   (synopsis "Just the Nerd Font Icons.")
    (description
-    "symbols-nerd-font description dayo")
-   (license license:expat)))
+    "")
+   (license (list license:expat license:silofl1.1))))
 
 (define-public font-ubuntu
   (package
