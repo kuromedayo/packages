@@ -20,9 +20,10 @@
               "0h53ldrkydxaps4kv087k71xgmb40b1s2nv2kvxc4bvs3qy60y10"))))
    (build-system font-build-system)
    (home-page "https://www.nerdfonts.com")
-   (synopsis "Just the Nerd Font Icons.")
-   (description
-    "")
+   (synopsis "Patched developer fonts with extra glyphs")
+   (description "This package provides patched developer-targeted fonts with a
+high number of additional glyphs.  It includes extra glyphs from popular iconic
+fonts such as Font Awesome, Devicons, Octicons, and more.")
    (license (list license:expat license:silofl1.1))))
 
 (define-public font-ubuntu
